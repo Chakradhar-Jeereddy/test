@@ -3,6 +3,7 @@ pipeline{
         node{
             label "agent1"
         }
+    }
     environment{
         course = "devops"
     }
