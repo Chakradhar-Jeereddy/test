@@ -18,8 +18,14 @@ pipeline{
                     // Read and parse package.json file
                      def packageJson = readJSON file: 'package.json'
                      appVersion = packageJson.version
-                     echo "$appVersion"
                 }
+            }
+        }
+        stage('gather dependencies'){
+            steps{
+                sh """
+                  npm install
+                """
             }
         }
     }
