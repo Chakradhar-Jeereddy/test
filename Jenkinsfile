@@ -28,5 +28,12 @@ pipeline{
                 """
             }
         }
+        stage('unit test'){
+            steps{
+                sh """
+                  npm test
+                """
+            }
+        }
     }
 }
