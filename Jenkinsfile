@@ -64,7 +64,7 @@ pipeline{
                     sh """
                      aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${url}
                      docker build -t ${url}/${project}/${component}:${appVersion} .
-                     docker images
+                     docker push ${url}/${project}/${component}:${appVersion}
                     """
                 }
             }
