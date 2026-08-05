@@ -63,7 +63,7 @@ pipeline{
                 withAWS(credentials: 'aws-auth', region: 'us-east-1') {
                     sh """
                      aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${url}
-                     docker build -t ${project}/${component}:latest ${url}/${project}/${component}:${appVersion} .
+                     docker build -t ${url}/${project}/${component}:${appVersion} .
                      docker images
                     """
                 }
