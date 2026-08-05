@@ -35,5 +35,15 @@ pipeline{
                 """
             }
         }
+        stage('sonar scanning'){
+            environment{
+                SCANNER_HOME = tool 'sonar-8.0'
+            }
+            steps{
+                    withSonarQubeEnv('sonar-server'){
+                      sh "${SCANNER_HOME}/bin/sonar-scanner"
+                    }
+            }
+        }
     }
 }
