@@ -6,6 +6,10 @@ pipeline{
     }
     environment{
         course = "devops"
+        url = "406682759639.dkr.ecr.us-east-1.amazonaws.com"
+        region = "us-east-1"
+        project = "roboshop"
+        component = "catalogue"
     }
     options{
         disableConcurrentBuilds()
@@ -47,10 +51,21 @@ pipeline{
         }
         stage('quality gate'){
             steps{
-                scripts{
+                script{
                     timeout(time: 10, unit: 'MINUTES'){
                         waitForQualityGate abortPipeline: true
                     }
+                }
+            }
+        }
+        stage('build image'){
+            steps{
+                withAWS(credentials: 'aws-auth', region: us-eas-1) {
+                    sh """
+                     aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${url}
+                     docker build -t ${project}/${component}:latest ${url}/${project}/${component}:${appVersion} .
+                     docker images
+                    """
                 }
             }
         }
